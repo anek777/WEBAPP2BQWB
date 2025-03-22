@@ -6,17 +6,13 @@ function getProjectID_() {
  * Импортирует список ссылок для картинок на лист Настройки из таблицы БД wb_baskets
  * @param {Object} params - Параметры запроса, включая название листа.
  */
-function importWBbaskets(
-    params = {
-          need_headers: false
-          }
-  ) {
+function importWBbaskets() {
     const queryText =
       "SELECT nm_id, link FROM  `fresh-gravity-322709.system.wb_baskets`";
-    return runQuery(queryText, params.need_headers);
+    return runQuery(queryText);
   }
   
-  function runQuery(queryText, needHeaders = false, maxResultsPerPage = 15000, pageToken = null) {
+  function runQuery(queryText, maxResultsPerPage = 15000, pageToken = null) {
     const projectId = getProjectID_();
     let queryResults, jobId, jobLocation;
   
@@ -31,7 +27,7 @@ function importWBbaskets(
       queryResults = fetchNextPage_(projectId, jobId, jobLocation, pageToken, maxResultsPerPage);
     }
   
-    const data = generateReport_(queryResults, needHeaders); 
+    const data = generateReport_(queryResults); 
     const nextPageToken = queryResults.pageToken || null;
   
     return {
@@ -80,13 +76,13 @@ function startQuery_(queryText, maxResultsPerPage) {
   }
   
 
-function generateReport_(queryResults, needHeaders) {
-const rows = queryResults.rows || [];
-let data = rows.map((row) => row.f.map((field) => field.v));
+function generateReport_(queryResults) {
+  const rows = queryResults.rows || [];
+  const data = rows.map((row) => row.f.map((field) => field.v));
+  const headers = queryResults.schema.fields.map((field) => field.name);
 
-if (needHeaders) {
-    const headers = queryResults.schema.fields.map((field) => field.name);
-    data.unshift(headers);
-}
-return data;
+  return {
+    headers: headers,
+    data: data,
+  };
 }
