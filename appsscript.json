@@ -1,14 +1,6 @@
 {
   "timeZone": "Europe/Moscow",
   "dependencies": {
-    "libraries": [
-      {
-        "userSymbol": "BQ",
-        "version": "0",
-        "libraryId": "1y-L27TefsGUkd8PLYj0wCWGtgnxyI-TPYa4v5D2BpdDoWjOXgwYUT2li",
-        "developmentMode": true
-      }
-    ],
     "enabledAdvancedServices": [
       {
         "userSymbol": "BigQuery",
@@ -27,5 +19,12 @@
   "webapp": {
     "executeAs": "USER_DEPLOYING",
     "access": "ANYONE_ANONYMOUS"
-  }
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/cloud-platform",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/bigquery"
+  ]
 }

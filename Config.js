@@ -1,7 +1,7 @@
 /**
  * Список авторизованных функций.
  */
-var AUTHORIZED_FUNCTIONS = ["exampleFunction", "anotherFunction"];
+var AUTHORIZED_FUNCTIONS = ["importWBbaskets", "anotherFunction"];
 
 
 /**
@@ -9,6 +9,6 @@ var AUTHORIZED_FUNCTIONS = ["exampleFunction", "anotherFunction"];
  * В будущем заменить на запрос в базу данных.
  */
 var AUTHORIZED_USERS = [
-    { email: 'anek777@gmail.com', ssid: '1XcwY6x4feaRu8RU4mfupqPGo620JDqdfZ_e0jZfiBh8' },
-    { email: 'user2@example.com', ssid: '2wxyz91011mnop1213qrst' }
+    { email: 'anek777@gmail.com', ssid: '1pAvZCM_cxs1AGl3FzpX-K9JsrgtZwgd4vwHcN6FZ7Yk' },
+    { email: 'anek@mpnl.ru', ssid: '1pAvZCM_cxs1AGl3FzpX-K9JsrgtZwgd4vwHcN6FZ7Yk' }
 ];

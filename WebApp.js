@@ -29,31 +29,36 @@ function doPost(e) {
         var ssid = requestBody.ssid; // ID таблицы, из которой был вызов
         var userEmail = requestBody.userEmail; // Почта пользователя
 
+        let error_message = '';
         // Проверяем авторизацию пользователя
         if (!isAuthorized_(userEmail, ssid)) {
-            Logger.log('Пользователь или таблица не авторизованы: ' + userEmail);
-            return createResponse_(false, 'Пользователь или таблица не авторизованы.');
+            error_message = 'Пользователь (' + userEmail + ') или таблица (' + ssid + ') не авторизованы.';
+            Logger.log(error_message);
+            return createResponse_(false, error_message);
         }
 
         // Проверяем существование функции в разрешенном списке
         if (!isFunctionAuthorized_(functionName)) {
-            Logger.log('Функция не входит в разрешенный список: ' + functionName);
-            return createResponse_(false, 'Функция не входит в разрешенный список.');
+            error_message = 'Функция не входит в разрешенный список: ' + functionName;
+            Logger.log(error_message);
+            return createResponse_(false, error_message);
         }
 
         // Проверяем наличие функции в текущей среде и выполняем
         if (typeof this[functionName] === 'function') {
             Logger.log('Выполнение функции: ' + functionName);
             var result = this[functionName](...parameters);
-            return createResponse_(true, 'Функция выполнена успешно.', result);
+            return createResponse_(true, 'Функция '+ functionName + ' выполнена успешно.', result);
         } else {
-            Logger.log('Функция не найдена: ' + functionName);
-            return createResponse_(false, 'Указанная функция не найдена.');
+            error_message = 'Функция не найдена: ' + functionName;
+            Logger.log(error_message);
+            return createResponse_(false, error_message);
         }
 
     } catch (error) {
-        Logger.log('Произошла ошибка: ' + error.message);
-        return createResponse_(false, 'Произошла ошибка: ' + error.message);
+        error_message = 'Произошла ошибка: ' + error.message + '\n' + error.stack;
+        Logger.log(error_message);
+        return createResponse_(false, error_message);
     }
 }
 
